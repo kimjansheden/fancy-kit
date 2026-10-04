@@ -62,11 +62,13 @@ const defaultCliCandidatesByPlatform: Partial<
 };
 
 function windowsInstallRoots(env: NodeJS.ProcessEnv): string[] {
+  const programFiles64 = env.ProgramW6432?.trim();
   const programFilesX86 = env["ProgramFiles(x86)"]?.trim();
   const roots = [
     env.LOCALAPPDATA?.trim()
       ? join(env.LOCALAPPDATA, "Programs", "Obsidian")
       : undefined,
+    programFiles64 ? join(programFiles64, "Obsidian") : undefined,
     env.ProgramFiles?.trim()
       ? join(env.ProgramFiles, "Obsidian")
       : "C:\\Program Files\\Obsidian",
